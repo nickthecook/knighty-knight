@@ -21,7 +21,6 @@ func jump():
 	can_jump = false
 
 func _on_jump_timer_timeout():
-	print("Coyote time has expired.")
 	can_jump = false
 
 func _physics_process(delta):
