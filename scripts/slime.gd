@@ -1,6 +1,6 @@
 extends Node2D
 
-const SPEED = 25
+const SPEED = 30
 
 var direction = 1
 
