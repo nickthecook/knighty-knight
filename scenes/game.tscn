@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dykpe0w3w3fqe"]
+[gd_scene load_steps=29 format=3 uid="uid://dykpe0w3w3fqe"]
 
 [ext_resource type="PackedScene" uid="uid://dcrkv14mo8sv3" path="res://scenes/player.tscn" id="1_qtlhm"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_ssile"]
@@ -38,7 +38,19 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_ogguw"]
 font = ExtResource("3_g3dmj")
 font_size = 48
-outline_size = 4
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1hc7b"]
+font = ExtResource("3_g3dmj")
+font_size = 48
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ai44t"]
+font = ExtResource("3_g3dmj")
+font_size = 48
+outline_size = 16
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_thp2o"]
@@ -692,6 +704,28 @@ texture = ExtResource("5_pifcd")
 region_enabled = true
 region_rect = Rect2(6.56507, 7.5116, 16.5166, 22.1473)
 
+[node name="AhhhLabel" type="Label" parent="GameManager/UI"]
+visible = false
+offset_left = 892.0
+offset_top = 429.0
+offset_right = 1612.0
+offset_bottom = 477.0
+text = "Ahhh... that's nice."
+label_settings = SubResource("LabelSettings_1hc7b")
+
+[node name="TooBrightLabel" type="Label" parent="GameManager/UI"]
+visible = false
+offset_left = 582.0
+offset_top = 365.0
+offset_right = 1998.0
+offset_bottom = 515.0
+text = "Nope, too bright.
+
+I need to find a darker place to sleep!"
+label_settings = SubResource("LabelSettings_ai44t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="DeathTimer" type="Timer" parent="GameManager"]
 one_shot = true
 
@@ -704,6 +738,9 @@ one_shot = true
 
 [node name="SoTiredStartTimer" type="Timer" parent="GameManager"]
 one_shot = true
+
+[node name="TooBrightTimer" type="Timer" parent="GameManager"]
+wait_time = 3.0
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_85p1p")
@@ -720,7 +757,7 @@ layer_3/tile_data = PackedInt32Array(327668, 262144, 9, 327669, 262144, 9, 32767
 
 [node name="Player" parent="." instance=ExtResource("1_qtlhm")]
 z_index = 5
-position = Vector2(-41, -5)
+position = Vector2(-39, 12)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(19, -36)
@@ -1186,4 +1223,5 @@ position = Vector2(457, -3239)
 [connection signal="timeout" from="GameManager/SleepTimer" to="GameManager" method="_on_sleep_timer_timeout"]
 [connection signal="timeout" from="GameManager/SoTiredTimer" to="GameManager" method="_on_so_tired_timer_timeout"]
 [connection signal="timeout" from="GameManager/SoTiredStartTimer" to="GameManager" method="_on_so_tired_start_timer_timeout"]
+[connection signal="timeout" from="GameManager/TooBrightTimer" to="GameManager" method="_on_too_bright_timer_timeout"]
 [connection signal="body_entered" from="Killzone" to="GameManager" method="_on_killzone_body_entered"]

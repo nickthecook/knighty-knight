@@ -12,11 +12,14 @@ var checkpoint_y = 12
 @onready var sleep_timer = $SleepTimer
 @onready var so_tired_timer = $SoTiredTimer
 @onready var so_tired_start_timer = $SoTiredStartTimer
+@onready var too_bright_timer = $TooBrightTimer
 
 @onready var game_over_label = $UI/GameOverLabel
 @onready var score_label = $UI/ScoreLabel
 @onready var lives_label = $UI/LivesLabel
 @onready var so_tired_label = $UI/SoTiredLabel
+@onready var ahhh_label = $UI/AhhhLabel
+@onready var too_bright_label = $UI/TooBrightLabel
 
 @onready var bed = $"../Checkpoints/Bed"
 @onready var bed_2 = $"../Checkpoints/Bed2"
@@ -40,6 +43,7 @@ func player_sleeping(checkpoint):
 	checkpoint_y = checkpoint.position.y
 	player.sleep(checkpoint.position.x, checkpoint.position.y)
 	sleep_timer.start()
+	ahhh_label.visible = true
 
 func add_score(amount):
 	score += amount
@@ -77,14 +81,17 @@ func _on_timer_timeout():
 
 func _on_sleep_timer_timeout():
 	player.wake()
-
+	ahhh_label.visible = false
+	too_bright_label.visible = true
+	too_bright_timer.start()
 
 func _on_so_tired_start_timer_timeout():
 	so_tired_label.visible = true
 	so_tired_timer.start()
-	
-
-
 
 func _on_so_tired_timer_timeout():
 	so_tired_label.visible = false
+
+
+func _on_too_bright_timer_timeout():
+	too_bright_label.visible = false
