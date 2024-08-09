@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dcrkv14mo8sv3"]
+[gd_scene load_steps=29 format=3 uid="uid://dcrkv14mo8sv3"]
 
 [ext_resource type="Texture2D" uid="uid://blcm2psjqlwwf" path="res://assets/sprites/knight.png" id="1_agyti"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_k7bfn"]
@@ -92,6 +92,10 @@ region = Rect2(192, 96, 32, 32)
 atlas = ExtResource("1_agyti")
 region = Rect2(224, 96, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk2gs"]
+atlas = ExtResource("1_agyti")
+region = Rect2(160, 160, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_by6wc"]
 animations = [{
 "frames": [{
@@ -179,6 +183,14 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk2gs")
+}],
+"loop": true,
+"name": &"sleep",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ndag8"]

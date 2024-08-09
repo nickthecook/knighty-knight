@@ -10,6 +10,8 @@ var alive = true
 var can_jump = true
 var was_on_floor = true
 var reset = false
+var just_woke = false
+var awake = true
 
 signal died
 
@@ -20,12 +22,28 @@ signal died
 @onready var collision_shape = $CollisionShape2D
 
 func entered_killzone():
+	# TODO: why is this necessary? Killzone triggers after the player respawns for some reason.
 	if reset:
 		print("Resetting instead of dying...")
 		reset = false
 	else:
 		if alive:
 			died.emit()
+
+func sleep(x, y):
+	print("Player.sleep")
+	position.x = x
+	position.y = y
+	animated_sprite.play("sleep")
+	animated_sprite.flip_h = true
+	awake = false
+
+func wake():
+	print("Player.wake")
+	animated_sprite.play("idle")
+	animated_sprite.flip_h = false
+	awake = true
+	just_woke = true
 
 func die():
 	print("Player.die")
@@ -52,6 +70,9 @@ func _on_jump_timer_timeout():
 	can_jump = false
 
 func _physics_process(delta):
+	if not awake:
+		return
+
 	# Add the gravity.
 	if is_on_floor():
 		can_jump = true
@@ -71,6 +92,7 @@ func _physics_process(delta):
 	var direction = Input.get_axis("move_left", "move_right")
 	
 	# flip the sprite
+
 	if direction > 0:
 		animated_sprite.flip_h = false
 	elif direction < 0:
