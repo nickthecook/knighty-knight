@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dykpe0w3w3fqe"]
+[gd_scene load_steps=27 format=3 uid="uid://dykpe0w3w3fqe"]
 
 [ext_resource type="PackedScene" uid="uid://dcrkv14mo8sv3" path="res://scenes/player.tscn" id="1_qtlhm"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_ssile"]
@@ -33,6 +33,12 @@ outline_color = Color(0, 0, 0, 1)
 font = ExtResource("3_g3dmj")
 font_size = 32
 outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ogguw"]
+font = ExtResource("3_g3dmj")
+font_size = 48
+outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_thp2o"]
@@ -647,9 +653,10 @@ vertical_alignment = 1
 
 [node name="GameOverLabel" type="Label" parent="GameManager/UI"]
 visible = false
-z_index = 11
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 1001.0
+offset_top = 686.0
+offset_right = 1601.0
+offset_bottom = 750.0
 text = "Game Over."
 label_settings = SubResource("LabelSettings_vhldc")
 horizontal_alignment = 1
@@ -663,6 +670,21 @@ offset_bottom = 68.0
 text = "3"
 label_settings = SubResource("LabelSettings_n0r1f")
 
+[node name="SoTiredLabel" type="Label" parent="GameManager/UI"]
+visible = false
+offset_left = 540.0
+offset_top = 197.0
+offset_right = 2060.0
+offset_bottom = 529.0
+text = "**YAAAWWWN**
+
+What a big day that was.
+
+I need to find a place to sleep!"
+label_settings = SubResource("LabelSettings_ogguw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="LivesIcon" type="Sprite2D" parent="GameManager/UI"]
 position = Vector2(2345, 49)
 scale = Vector2(2.24999, 2.27273)
@@ -670,11 +692,18 @@ texture = ExtResource("5_pifcd")
 region_enabled = true
 region_rect = Rect2(6.56507, 7.5116, 16.5166, 22.1473)
 
-[node name="Timer" type="Timer" parent="GameManager"]
+[node name="DeathTimer" type="Timer" parent="GameManager"]
 one_shot = true
 
 [node name="SleepTimer" type="Timer" parent="GameManager"]
 wait_time = 3.0
+
+[node name="SoTiredTimer" type="Timer" parent="GameManager"]
+wait_time = 2.5
+one_shot = true
+
+[node name="SoTiredStartTimer" type="Timer" parent="GameManager"]
+one_shot = true
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_85p1p")
@@ -1153,6 +1182,8 @@ position = Vector2(-64, -2551)
 [node name="Bed4" parent="Checkpoints" instance=ExtResource("16_y3y23")]
 position = Vector2(457, -3239)
 
-[connection signal="timeout" from="GameManager/Timer" to="GameManager" method="_on_timer_timeout"]
+[connection signal="timeout" from="GameManager/DeathTimer" to="GameManager" method="_on_timer_timeout"]
 [connection signal="timeout" from="GameManager/SleepTimer" to="GameManager" method="_on_sleep_timer_timeout"]
+[connection signal="timeout" from="GameManager/SoTiredTimer" to="GameManager" method="_on_so_tired_timer_timeout"]
+[connection signal="timeout" from="GameManager/SoTiredStartTimer" to="GameManager" method="_on_so_tired_start_timer_timeout"]
 [connection signal="body_entered" from="Killzone" to="GameManager" method="_on_killzone_body_entered"]
