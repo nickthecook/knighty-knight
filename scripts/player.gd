@@ -9,11 +9,39 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var alive = true
 var can_jump = true
 var was_on_floor = true
+var reset = false
+
+signal died
 
 @onready var player = $"."
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var audio_stream_player = $AudioStreamPlayer2D
 @onready var jump_timer = $JumpTimer
+@onready var collision_shape = $CollisionShape2D
+
+func entered_killzone():
+	if reset:
+		print("Resetting instead of dying...")
+		reset = false
+	else:
+		if alive:
+			died.emit()
+
+func die():
+	print("Player.die")
+	animated_sprite.play("die")
+	collision_shape.call_deferred("set", "disabled", true)
+	alive = false
+
+func reset_at(x, y):
+	print("Player.reset_at(" + str(x) + "," + str("y") + ")")
+	position.x = x
+	position.y = y
+	alive = true
+	reset = true
+	collision_shape.disabled = false
+	velocity.y = 0
+	animated_sprite.play("idle")
 
 func jump():
 	velocity.y = JUMP_VELOCITY
