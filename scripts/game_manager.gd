@@ -13,6 +13,8 @@ var checkpoint_y = 12
 @onready var so_tired_timer = $SoTiredTimer
 @onready var so_tired_start_timer = $SoTiredStartTimer
 @onready var too_bright_timer = $TooBrightTimer
+@onready var just_right_timer = $JustRightTimer
+@onready var snore_timer = $SnoreTimer
 
 @onready var game_over_label = $UI/GameOverLabel
 @onready var score_label = $UI/ScoreLabel
@@ -20,11 +22,14 @@ var checkpoint_y = 12
 @onready var so_tired_label = $UI/SoTiredLabel
 @onready var ahhh_label = $UI/AhhhLabel
 @onready var too_bright_label = $UI/TooBrightLabel
+@onready var just_right_label = $UI/JustRightLabel
+@onready var snore_label = $UI/SnoreLabel
 
 @onready var bed = $"../Checkpoints/Bed"
 @onready var bed_2 = $"../Checkpoints/Bed2"
 @onready var bed_3 = $"../Checkpoints/Bed3"
 @onready var bed_4 = $"../Checkpoints/Bed4"
+@onready var bed_5 = $"../Checkpoints/Bed5"
 
 func _ready():
 	print("CONNECT" )
@@ -33,6 +38,7 @@ func _ready():
 	bed_2.player_sleeping.connect(player_sleeping)
 	bed_3.player_sleeping.connect(player_sleeping)
 	bed_4.player_sleeping.connect(player_sleeping)
+	bed_5.player_sleeping.connect(player_won)
 	so_tired_start_timer.start()
 
 func player_sleeping(checkpoint):
@@ -44,6 +50,11 @@ func player_sleeping(checkpoint):
 	player.sleep(checkpoint.position.x, checkpoint.position.y)
 	sleep_timer.start()
 	ahhh_label.visible = true
+
+func player_won(checkpoint):
+	player.sleep(checkpoint.position.x, checkpoint.position.y)
+	just_right_label.visible = true
+	just_right_timer.start()
 
 func add_score(amount):
 	score += amount
@@ -95,3 +106,15 @@ func _on_so_tired_timer_timeout():
 
 func _on_too_bright_timer_timeout():
 	too_bright_label.visible = false
+
+
+func _on_just_right_timer_timeout():
+	just_right_label.visible = false
+	snore_timer.start()
+
+
+func _on_snore_timer_timeout():
+	if snore_label.visible:
+		snore_label.visible = false
+	else:
+		snore_label.visible = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bfsqsmcglmnxf"]
+[gd_scene load_steps=18 format=3 uid="uid://bfsqsmcglmnxf"]
 
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_3tf0p"]
 [ext_resource type="Texture2D" uid="uid://bt6whkta1qnpg" path="res://assets/sprites/slime_white.png" id="2_10q0x"]
@@ -20,10 +20,6 @@ region = Rect2(48, 0, 24, 24)
 atlas = ExtResource("2_10q0x")
 region = Rect2(72, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c604x"]
-atlas = ExtResource("2_10q0x")
-region = Rect2(0, 24, 24, 24)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_3yfu1"]
 atlas = ExtResource("2_10q0x")
 region = Rect2(24, 24, 24, 24)
@@ -35,6 +31,26 @@ region = Rect2(48, 24, 24, 24)
 [sub_resource type="AtlasTexture" id="AtlasTexture_tahkg"]
 atlas = ExtResource("2_10q0x")
 region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_olnxk"]
+atlas = ExtResource("2_10q0x")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rgjsn"]
+atlas = ExtResource("2_10q0x")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3thfp"]
+atlas = ExtResource("2_10q0x")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ac3ns"]
+atlas = ExtResource("2_10q0x")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epdyy"]
+atlas = ExtResource("2_10q0x")
+region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kbah7"]
 animations = [{
@@ -52,9 +68,6 @@ animations = [{
 "texture": SubResource("AtlasTexture_ud8rt")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c604x")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_3yfu1")
 }, {
 "duration": 1.0,
@@ -62,10 +75,25 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tahkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olnxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rgjsn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3thfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ac3ns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epdyy")
 }],
 "loop": true,
 "name": &"default",
-"speed": 6.0
+"speed": 18.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kst5y"]
@@ -86,8 +114,8 @@ shape = SubResource("RectangleShape2D_kst5y")
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, 6)
-target_position = Vector2(9, 0)
+target_position = Vector2(13, 0)
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, 6)
-target_position = Vector2(-9, 0)
+target_position = Vector2(-13, 0)

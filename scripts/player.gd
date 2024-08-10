@@ -4,8 +4,8 @@ extends CharacterBody2D
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var default_gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity = default_gravity
 var alive = true
 var can_jump = true
 var was_on_floor = true
@@ -114,3 +114,14 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()	
+
+
+func _on_space_body_entered(body):
+	if body is CharacterBody2D:
+		print("In space")
+		gravity = (default_gravity / 2)
+
+func _on_space_body_exited(body):
+	if body is CharacterBody2D:
+		print("Not in space")
+		gravity = default_gravity
