@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://df6vpfkqnqws4"]
+[gd_scene load_steps=5 format=3 uid="uid://df6vpfkqnqws4"]
 
 [ext_resource type="Script" path="res://scripts/bed.gd" id="1_35l74"]
 [ext_resource type="Texture2D" uid="uid://b2y7x5qyu87id" path="res://assets/sprites/world_tileset.png" id="1_66k7f"]
+[ext_resource type="AudioStream" uid="uid://0hyltqp7i36y" path="res://assets/sounds/power_up.wav" id="3_wbhkn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rrxjq"]
 size = Vector2(14, 11)
@@ -18,5 +19,8 @@ region_rect = Rect2(176, 48, 32, 17)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_rrxjq")
+
+[node name="SleepSoundPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_wbhkn")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

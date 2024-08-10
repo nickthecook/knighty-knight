@@ -12,14 +12,19 @@ var was_on_floor = true
 var reset = false
 var just_woke = false
 var awake = true
+var in_space = false
 
 signal died
+signal entered_space
+signal exited_space
 
 @onready var player = $"."
 @onready var animated_sprite = $AnimatedSprite2D
-@onready var audio_stream_player = $AudioStreamPlayer2D
+@onready var jump_sound_player = $JumpSoundPlayer
 @onready var jump_timer = $JumpTimer
+@onready var landing_sound_player = $LandingSoundPlayer
 @onready var collision_shape = $CollisionShape2D
+@onready var snore_sound_player = $SnoreSoundPlayer
 
 func entered_killzone():
 	# TODO: why is this necessary? Killzone triggers after the player respawns for some reason.
@@ -51,6 +56,10 @@ func die():
 	collision_shape.call_deferred("set", "disabled", true)
 	alive = false
 
+func snore():
+	print("Player.snore")
+	snore_sound_player.play(0.0)
+
 func reset_at(x, y):
 	print("Player.reset_at(" + str(x) + "," + str("y") + ")")
 	position.x = x
@@ -63,7 +72,8 @@ func reset_at(x, y):
 
 func jump():
 	velocity.y = JUMP_VELOCITY
-	audio_stream_player.play()
+	if not in_space:
+		jump_sound_player.play()
 	can_jump = false
 
 func _on_jump_timer_timeout():
@@ -73,10 +83,12 @@ func _physics_process(delta):
 	if not awake:
 		return
 
-	# Add the gravity.
 	if is_on_floor():
 		can_jump = true
-		was_on_floor = true
+		if not was_on_floor:
+			if not in_space:
+				landing_sound_player.play()
+			was_on_floor = true
 	elif was_on_floor:
 		was_on_floor = false
 		jump_timer.start()
@@ -119,9 +131,12 @@ func _physics_process(delta):
 func _on_space_body_entered(body):
 	if body is CharacterBody2D:
 		print("In space")
+		entered_space.emit()
+		in_space = true
 		gravity = (default_gravity / 2)
 
 func _on_space_body_exited(body):
 	if body is CharacterBody2D:
 		print("Not in space")
+		exited_space.emit()
 		gravity = default_gravity

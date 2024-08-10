@@ -5,3 +5,6 @@
 [node name="Music" type="AudioStreamPlayer2D"]
 stream = ExtResource("1_41jar")
 autoplay = true
+max_distance = 100000.0
+bus = &"Music"
+area_mask = 15

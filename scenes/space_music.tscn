@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://vq356rtnvvmh"]
+
+[ext_resource type="AudioStream" uid="uid://ddmy1nh5a1rir" path="res://assets/music/space.wav" id="1_kl7mp"]
+
+[node name="SpaceMusic" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_kl7mp")

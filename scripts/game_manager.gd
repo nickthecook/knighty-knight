@@ -38,11 +38,15 @@ var game_finished = false
 func _ready():
 	print("CONNECT" )
 	player.died.connect(player_died)
+	player.entered_space.connect(player_entered_space)
+	player.exited_space.connect(player_exited_space)
+
 	bed.player_sleeping.connect(player_sleeping)
 	bed_2.player_sleeping.connect(player_sleeping)
 	bed_3.player_sleeping.connect(player_sleeping)
 	bed_4.player_sleeping.connect(player_sleeping)
 	bed_5.player_sleeping.connect(player_won)
+
 	so_tired_start_timer.start()
 
 func player_sleeping(checkpoint):
@@ -121,6 +125,7 @@ func _on_just_right_timer_timeout():
 func _on_snore_timer_timeout():
 	snore_animation_player.play("snoring")
 	snore_label.visible = true
+	player.snore()
 
 func _on_restart_timer_timeout():
 	restart_label.visible = true
@@ -132,3 +137,17 @@ func _process(delta: float):
 	
 	if Input.is_anything_pressed():
 		get_tree().reload_current_scene()
+
+func player_entered_space():
+	print("GameManager.player_entered_space")
+	%Music.stop()
+	%SpaceMusic.play()
+
+func player_exited_space():
+	print("GameManager.player_exited_space")
+	%SpaceMusic.stop()
+	%Music.play()
+
+
+func _on_space_music_finished():
+	%SpaceMusic.play()
