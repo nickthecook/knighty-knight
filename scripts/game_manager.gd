@@ -4,6 +4,7 @@ var score = 0
 var lives = 3
 var checkpoint_x = -39
 var checkpoint_y = 12
+var game_finished = false
 
 @onready var player = $"../Player"
 @onready var killzone = $"../Killzone"
@@ -15,6 +16,7 @@ var checkpoint_y = 12
 @onready var too_bright_timer = $TooBrightTimer
 @onready var just_right_timer = $JustRightTimer
 @onready var snore_timer = $SnoreTimer
+@onready var restart_timer = $RestartTimer
 
 @onready var game_over_label = $UI/GameOverLabel
 @onready var score_label = $UI/ScoreLabel
@@ -25,6 +27,7 @@ var checkpoint_y = 12
 @onready var just_right_label = $UI/JustRightLabel
 @onready var snore_label = $UI/SnoreLabel
 @onready var snore_animation_player = $UI/SnoreLabel/AnimationPlayer
+@onready var restart_label = $UI/RestartLabel
 
 @onready var bed = $"../Checkpoints/Bed"
 @onready var bed_2 = $"../Checkpoints/Bed2"
@@ -113,8 +116,19 @@ func _on_too_bright_timer_timeout():
 func _on_just_right_timer_timeout():
 	just_right_label.visible = false
 	snore_timer.start()
-
+	restart_timer.start()
 
 func _on_snore_timer_timeout():
 	snore_animation_player.play("snoring")
 	snore_label.visible = true
+
+func _on_restart_timer_timeout():
+	restart_label.visible = true
+	game_finished = true
+	
+func _process(delta: float):
+	if not game_finished:
+		return
+	
+	if Input.is_anything_pressed():
+		get_tree().reload_current_scene()
