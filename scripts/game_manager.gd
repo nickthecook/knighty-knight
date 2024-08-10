@@ -24,6 +24,7 @@ var checkpoint_y = 12
 @onready var too_bright_label = $UI/TooBrightLabel
 @onready var just_right_label = $UI/JustRightLabel
 @onready var snore_label = $UI/SnoreLabel
+@onready var snore_animation_player = $UI/SnoreLabel/AnimationPlayer
 
 @onready var bed = $"../Checkpoints/Bed"
 @onready var bed_2 = $"../Checkpoints/Bed2"
@@ -55,6 +56,7 @@ func player_won(checkpoint):
 	player.sleep(checkpoint.position.x, checkpoint.position.y)
 	just_right_label.visible = true
 	just_right_timer.start()
+	player.process_mode = Node.PROCESS_MODE_DISABLED
 
 func add_score(amount):
 	score += amount
@@ -114,7 +116,5 @@ func _on_just_right_timer_timeout():
 
 
 func _on_snore_timer_timeout():
-	if snore_label.visible:
-		snore_label.visible = false
-	else:
-		snore_label.visible = true
+	snore_animation_player.play("snoring")
+	snore_label.visible = true
