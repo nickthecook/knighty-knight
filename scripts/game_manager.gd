@@ -5,6 +5,8 @@ var lives = 3
 var checkpoint_x = -39
 var checkpoint_y = 12
 var game_finished = false
+var start_time
+var finish_time
 
 @onready var player = $"../Player"
 @onready var killzone = $"../Killzone"
@@ -28,6 +30,7 @@ var game_finished = false
 @onready var snore_label = $UI/SnoreLabel
 @onready var snore_animation_player = $UI/SnoreLabel/AnimationPlayer
 @onready var restart_label = $UI/RestartLabel
+@onready var timer_label = $UI/TimerLabel
 
 @onready var bed = $"../Checkpoints/Bed"
 @onready var bed_2 = $"../Checkpoints/Bed2"
@@ -49,6 +52,24 @@ func _ready():
 
 	so_tired_start_timer.start()
 
+	start_time = Time.get_unix_time_from_system()
+
+func _process(delta: float):
+	if game_finished:
+		if Input.is_anything_pressed():
+			get_tree().reload_current_scene()
+	else:
+		update_time()
+
+func update_time():
+	var elapsed_time
+
+	if finish_time:
+		elapsed_time = finish_time - start_time
+	else:
+		elapsed_time = Time.get_unix_time_from_system() - start_time
+	timer_label.text = "%0.3f" % elapsed_time
+	
 func player_sleeping(checkpoint):
 	if checkpoint_x == checkpoint.position.x and checkpoint_y == checkpoint.position.y:
 		return
@@ -60,6 +81,7 @@ func player_sleeping(checkpoint):
 	ahhh_label.visible = true
 
 func player_won(checkpoint):
+	finish_time = Time.get_unix_time_from_system()
 	player.sleep(checkpoint.position.x, checkpoint.position.y)
 	just_right_label.visible = true
 	just_right_timer.start()
@@ -130,13 +152,6 @@ func _on_snore_timer_timeout():
 func _on_restart_timer_timeout():
 	restart_label.visible = true
 	game_finished = true
-	
-func _process(delta: float):
-	if not game_finished:
-		return
-	
-	if Input.is_anything_pressed():
-		get_tree().reload_current_scene()
 
 func player_entered_space():
 	print("GameManager.player_entered_space")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dykpe0w3w3fqe"]
+[gd_scene load_steps=41 format=3 uid="uid://dykpe0w3w3fqe"]
 
 [ext_resource type="PackedScene" uid="uid://dcrkv14mo8sv3" path="res://scenes/player.tscn" id="1_qtlhm"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_ssile"]
@@ -134,6 +134,12 @@ _data = {
 font = ExtResource("3_g3dmj")
 font_size = 48
 outline_size = 32
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_n51ns"]
+font = ExtResource("3_g3dmj")
+font_size = 32
+outline_size = 16
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_thp2o"]
@@ -893,6 +899,18 @@ offset_bottom = 1437.0
 text = "Press anything to restart."
 label_settings = SubResource("LabelSettings_2qsid")
 
+[node name="TimerLabel" type="Label" parent="GameManager/UI"]
+anchors_preset = -1
+anchor_right = 0.014
+anchor_bottom = 0.007
+offset_left = 2066.0
+offset_top = 37.0
+offset_right = 2266.16
+offset_bottom = 58.248
+text = "0.000"
+label_settings = SubResource("LabelSettings_n51ns")
+horizontal_alignment = 2
+
 [node name="DeathTimer" type="Timer" parent="GameManager"]
 one_shot = true
 
@@ -936,7 +954,7 @@ layer_3/tile_data = PackedInt32Array(327668, 262144, 9, 327669, 262144, 9, 32767
 
 [node name="Player" parent="." instance=ExtResource("1_qtlhm")]
 z_index = 5
-position = Vector2(-38, -2)
+position = Vector2(-40, -8)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(19, -36)
